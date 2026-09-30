@@ -51,7 +51,12 @@ ServeResult CustomerLine::ServeHighestPriority(const RecipeBook& recipes,
         customers_.begin(), customers_.end(), CustomerPriorityCompare());
 
     Customer top = pq.top();
-    const auto& required = recipes.IngredientsFor(top.recipeName);
+    auto required = recipes.IngredientsFor(top.recipeName);
+    // Game rule: ingredient order doesn't matter. Sort the recipe's list
+    // so == does a multiset-style comparison against the already-sorted
+    // cup snapshot. Without sorting here, vector::operator== is sequence
+    // equality and a correct cup in the wrong push order would mismatch.
+    std::sort(required.begin(), required.end());
 
     if (cupSnapshotSorted == required) {
         // Success: remove the customer and report reward.
