@@ -14,6 +14,8 @@ Action PollAction() {
     if (IsKeyPressed(KEY_R))        return Action::Restart;
     if (IsKeyPressed(KEY_BACKSPACE)) return Action::Undo;
     if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE)) return Action::AddIngredient;
+    if (IsKeyPressed(KEY_L))        return Action::ChooseNext;
+    if (IsKeyPressed(KEY_H))        return Action::ChoosePrev;
     if (IsKeyPressed(KEY_RIGHT))    return Action::ChooseNext;
     if (IsKeyPressed(KEY_LEFT))     return Action::ChoosePrev;
     return Action::None;
